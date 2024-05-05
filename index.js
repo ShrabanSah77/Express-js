@@ -1,19 +1,31 @@
-// 1. npm init -y
-// 2. npm i express --save
-// 3. create .gitignore file > Add node_modules folder
-// 4. create index.js file
-// 5. update the script as dev: "node index.js" in the package.jsonn
-// 6. jsong
-
-
 require("dotenv").config();
+
 const express = require("express");
 const app = express();
-
 const PORT = Number(process.env.PORT);
 
-app.get("/", (req, res) => {
-  res.json({ msg: "Hello world by Shraban" });
+app.get("/:id", (req, res) => {
+  res.json({ msg: "Get Hello world by Shraban" });
+});
+
+app.post("/", (req, res) => {
+  // Client send the data
+  console.log({ query: req.query, params: req.params, body: req.body });
+  res.json({ msg: "Post Hello world by Shraban" });
+});
+
+app.put("/", (req, res) => {
+  // Client send the data
+  res.json({ msg: "Put Hello world by Shraban" });
+});
+
+app.patch("/", (req, res) => {
+  // Client send the data
+  res.json({ msg: "Patch Hello world by Shraban" });
+});
+
+app.delete("/", (req, res) => {
+  res.json({ msg: "Delete Hello world by Shraban" });
 });
 
 app.listen(PORT, () => {
