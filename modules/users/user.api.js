@@ -1,0 +1,16 @@
+/*
+
+Register
+login
+forget password
+reset password
+change passwrod
+verify token
+change status of user
+delete user
+list users
+update user
+update my profile
+get one user
+
+*/
