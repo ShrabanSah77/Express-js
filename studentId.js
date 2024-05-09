@@ -1,3 +1,19 @@
+/*
+
+User
+1. Create
+2. Update
+3. Read
+4. Delete
+5. Patch
+6. inActive
+7. Role change
+8. Password change
+9. Forget Password
+10. List all users
+
+*/
+
 require("dotenv").config();
 const express = require("express");
 const app = express();

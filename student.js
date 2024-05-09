@@ -1,3 +1,19 @@
+/*
+
+User
+1. Create
+2. Update
+3. Read
+4. Delete
+5. Patch
+6. inActive
+7. Role change
+8. Password change
+9. Forget Password
+10. List all users
+
+*/
+
 const express = require("express");
 require("dotenv").config();
 
@@ -7,7 +23,7 @@ const port = Number(process.env.PORT);
 app.use(express.json()); // ensures use of request.body
 
 const users = [
-  { name: "Saral", age: 25, id: 1 },
+  { name: "Shraban", age: 25, id: 1 },
   { name: "Ram", age: 14, id: 2 },
   { name: "Hari", age: 19, id: 3 },
 ];
