@@ -1,30 +1,19 @@
 /*
-
-Register
-login
-forget password
-reset password
-change passwrod
-verify token
-change status of user
-delete user
-list users
-update user
-update my profile
-get one user
+1. Register
+2. login
+3. forget password
+4. reset password
+5. change passwrod
+6. verify token
+7. change status of user
+8. delete user
+9. list users
+10. update user
+11. update my profile
+12. get one user
 
 */
 
-Router.get("/", secure(["admin"]), (req, res, next) => {
+const router = require("express").Router();
 
-});
-
-Router.post("/login", (req, res, next) => {
-    try {
-        const {email, password} = req.body;
-        if (!email || !password) throw new Error("Email or password is missing");
-        if (email === "shrabanshah77@gmail.com")
-    }
-});
-
-
+module.exports = router;

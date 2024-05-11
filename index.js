@@ -1,5 +1,6 @@
 require("dotenv").config();
 const express = require("express");
+const ip = require("ip");
 
 const indexRouter = require("./routes");
 const userRouter = require("./routes");
@@ -9,6 +10,14 @@ const PORT = Number(process.env.PORT);
 
 // I can parse request body as json
 app.use(express.json());
+
+// middleware (application level custom middleware)
+app.use((req, res, next) => {
+  req.body.country = ip.address;
+  req.body.currency = "NPR";
+  req.body.currentTime = new Date().toISOString();
+  next();
+});
 
 // I am the routing mechanism, I will send the API request from / to user index
 app.use("/", indexRouter);

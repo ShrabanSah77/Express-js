@@ -1,21 +1,13 @@
-const { checkRole, verifyToken } = require("./token");
+const checkRole = (userRole, sysRole) =>
+  userRole.some((item) => sysRole.includes(item));
 
-const secure = (sysRole) => {
+const mw = (sysRole) => {
   return (req, res, next) => {
-    try {
-      const { access_token } = req.headers;
-      // check the token is valid or not
-      if (!access_token) throw new Error("Token is missing");
-      // check the token is valid or not
-      const isValid = verifyToken(access_token);
-      const { data } = isValid;
-      const validRole = checkRole({ sysRole, userRole: data?.roles || [] });
-      if (!validRole) throw new Error("User unauthorized");
-      next();
-    } catch (e) {
-      next(e);
-    }
+    const { role } = req.headers;
+    const result = checkRole([role], sysRole);
+    if (!result) res.status(400).json({ msg: "Unauthorized User" });
+    next();
   };
 };
 
-module.exports = { secure };
+module.exports = { checkRole, mw };

@@ -1,124 +1,85 @@
-const router = require("express").Router();
-const mw = (req, res, next) => {
-  const { username, password} = req.headers;
-  if ()
-}
-
 /*
-
 create
 list
 read one order
 delete the order
 change the status of order
+update the order
 
 */
 
-module.exports = router;
+const router = require("express").Router();
 
-/*
+const mw = (req, res, next) => {
+  const { username, password } = req.headers;
+  if (username === "shraban" && password === " password") {
+    next();
+  }
+  res.status(404).json({ msg: "User Unauthorized" });
+};
 
-[5:05 PM] Shubham  Kadariya
-const express = require('express');
-const router = express.Router();
 //1) Create A Order
-try{
-    router.post('/createOrder', (req, res) => {
-        res.json({"message": "Order Created!"});
-    });
-}catch (e){
-    next(e);
-}
-//2) List The Orders
-try{
-    router.post('/listOrders', (req, res) => {
-        res.json({"message": "Order Listed!"});
-    });
-}catch (e){
-    next(e);
-}
-//3) Read One Order
-try{
-    router.post('/listOrder/:id', (req, res) => {
-        const id = req.params;
-        res.json({"message": `Order No ${id} Listed!`});
-    });
-}catch (e){
-    next(e);
-}
-//4) Change The Order Data
-try{
-    router.put('/changeOrder/:id', (req, res) => {
-        const id = req.params;
-        const {data} = req.query;
-        res.json({"message": `Order id: ${id}, Changed: ${data}!`});
-    });
-}catch (e){
-    next(e);
-}
-//5) Delete The Order
-try{
-    router.delete('/deleteOrder/:id', (req, res) => {
-        const id = req.params;
-        res.json({"message": `Order No ${id} Deleted!`});
-    });
-}catch (e){
-    next(e);
-}
-module.exports = router;
 
-
-
-// saral sainju
-
-require("express").Router();
- 
-let Orders = [];
- 
-// create new order
-router.post("/", (req, res, next) => {
+router.post("/", mw, (req, res, next) => {
   try {
-    const { movieName, quantity } = req.body;
-    // const id = Orders.length + 1;
-    // const newOrders = { movieName, quantity, id };
-    // Orders = [...Orders, newOrders];
-    // console.log({ Orders });
-    res.json({ msg: "Order Created" });
+    res.json({ msg: "Created new order" });
   } catch (e) {
     next(e);
   }
 });
- 
-// get all orders
+
+//2) List The Orders
+
 router.get("/", (req, res, next) => {
   try {
-    res.json({ msg: "All orders" });
+    res.json({ msg: "List all orders", data: req.body });
   } catch (e) {
     next(e);
   }
 });
- 
-// get order by id
+
+//3) Read One Order
+
 router.get("/:id", (req, res, next) => {
   try {
     const { id } = req.params;
-    res.json({ msg: "order" });
+    res.json({ msg: `get one order by ${id}` });
   } catch (e) {
     next(e);
   }
 });
- 
-//delete order by id
+
+//4) Change The Order Data
+
+router.patch("/:id/status", (req, res, next) => {
+  try {
+    const { id } = req.params;
+    res.json({ msg: `change status of one order by ${id}` });
+  } catch (e) {
+    next(e);
+  }
+});
+
+// update the order
+
+router.put("/:id/status", (req, res, next) => {
+  try {
+    const { id } = req.params;
+    res.json({ msg: `update one order by ${id}` });
+  } catch (e) {
+    next(e);
+  }
+});
+
+//5) Delete The Order
+
 router.delete("/:id", (req, res, next) => {
   try {
     const { id } = req.params;
-    res.json({ msg: "order deleted" });
+    res.json({ msg: `delete one order by ${id}` });
   } catch (e) {
     next(e);
   }
 });
- 
-module.exports = router;
-has context menu
 
-*/
+module.exports = router;
