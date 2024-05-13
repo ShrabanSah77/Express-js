@@ -2,7 +2,7 @@
 
 # User Login
 
-- input => req.body => email. password
+- input => req.body => email, password
 - if email and password doesn't match => throw error
 - output => jwt token
 

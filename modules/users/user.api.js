@@ -15,5 +15,25 @@
 */
 
 const router = require("express").Router();
+const { generateToken } = require("../../utils/token");
+
+router.post("/login", (req, res, next) => {
+  try {
+    const { email, password } = req.body;
+    if (email === "shrabanshah77@gmail.com" && password === "password") {
+      // generate the JWT Token
+      const payload = {
+        email,
+        role: ["admin"],
+      };
+      const token = generateTOken(payload);
+      res.json({ msg: "user logged in successfully", data: token });
+    } else {
+      res.json({ msg: "Email or password Invalid", data: "" });
+    }
+  } catch (e) {
+    next(e);
+  }
+});
 
 module.exports = router;
