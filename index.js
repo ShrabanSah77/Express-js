@@ -3,7 +3,6 @@ const express = require("express");
 const ip = require("ip");
 
 const indexRouter = require("./routes");
-const userRouter = require("./routes");
 
 const app = express();
 const PORT = Number(process.env.PORT);

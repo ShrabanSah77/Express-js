@@ -3,7 +3,7 @@ const router = express.Router();
 
 const movieRouter = require("../modules/movies/movie.api");
 const orderRouter = require("../modules/orders/order.api");
-const orderRouter = require("../modules/users/user.api");
+const userRouter = require("../modules/users/user.api");
 
 // how to connect modules form routes index.js
 

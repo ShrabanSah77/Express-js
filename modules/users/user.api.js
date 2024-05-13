@@ -57,9 +57,10 @@ router.post("/login", (req, res, next) => {
       // generate the JWT Token
       const payload = {
         email,
+        password,
         roles: ["admin"],
       };
-      const token = generateTOken(payload);
+      const token = generateToken(payload);
       res.json({ msg: "user logged in successfully", data: token });
     } else {
       res.json({ msg: "Email or password Invalid", data: "" });

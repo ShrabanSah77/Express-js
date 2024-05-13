@@ -10,6 +10,7 @@ const userSchema = Joi.object({
       tlds: { allow: ["com", "net"] },
     })
     .required(),
+    currency: Joi.string(),
   gender: Joi.string().valid("f", "m", "o"),
 });
 
