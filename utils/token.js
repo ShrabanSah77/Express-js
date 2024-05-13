@@ -13,6 +13,6 @@ const generateToken = (payload) =>
 
 const verifyTOken = (token) => JWT.verify(token, process.env.JWT_SECRET);
 
-const checkRole = ({ sysROle, userROle }) =>
-  userROle.some((role) => sysROle.includes(role));
-module.exports = { generateToken, verifyTOken };
+const checkRole = ({ sysRole, userRole }) =>
+  userRole.some((role) => sysRole.includes(role));
+module.exports = { checkRole, generateToken, verifyTOken };

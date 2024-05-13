@@ -1,4 +1,6 @@
 # User Sign up
+-database user record save
+-email, send welcome user email(event or async await)
 
 # User Login
 
@@ -12,3 +14,7 @@
 - if user is not admin, throw unauthorized error
 - how?? By using JWT Token; by sending jwt token
   through headers.
+
+# Utils
+-secure => verify JWT Token middleware
+- token => generateToken, verifyToken, checkRole

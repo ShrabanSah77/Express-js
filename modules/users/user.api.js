@@ -16,6 +16,14 @@
 
 const router = require("express").Router();
 const { generateToken } = require("../../utils/token");
+const {secure} = require("../../utils/secure");
+router.get("/", secure(["admin"]), (req, res, next) => {
+  try {
+    res.json({ msg: "User list generated", data: [] });
+  } catch (e) {
+    next(e);
+  }
+});
 
 router.post("/login", (req, res, next) => {
   try {
@@ -24,7 +32,7 @@ router.post("/login", (req, res, next) => {
       // generate the JWT Token
       const payload = {
         email,
-        role: ["admin"],
+        roles: ["admin"],
       };
       const token = generateTOken(payload);
       res.json({ msg: "user logged in successfully", data: token });
