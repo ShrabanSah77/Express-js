@@ -19,8 +19,9 @@ const router = require("express").Router();
 const { generateToken } = require("../../utils/token");
 const { secure } = require("../../utils/secure");
 const { sendMail } = require("../../services/mailer");
-
+const { validator } = require("./user.validator");
 const eventEmitter = new event.EventEmitter();
+
 eventEmitter.addListener("signup", (email) =>
   sendMail({
     email,
@@ -37,10 +38,9 @@ router.get("/", secure(["admin"]), (req, res, next) => {
   }
 });
 
-router.post("/register", (req, res, next) => {
+router.post("/register", validator, (req, res, next) => {
   try {
     const { email } = req.body;
-    if (!email) throw new Error("Email is missing");
     // call the nodemailer
 
     eventEmitter.emit("signup", email);
