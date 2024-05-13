@@ -14,12 +14,37 @@
 
 */
 
+const event = require("events");
 const router = require("express").Router();
 const { generateToken } = require("../../utils/token");
-const {secure} = require("../../utils/secure");
+const { secure } = require("../../utils/secure");
+const { sendMail } = require("../../services/mailer");
+
+const eventEmitter = new event.EventEmitter();
+eventEmitter.addListener("signup", (email) =>
+  sendMail({
+    email,
+    subject: "MovieMate Signup",
+    htmlMsg: "<b>Thank you for joining Moviemate</b>",
+  })
+);
+
 router.get("/", secure(["admin"]), (req, res, next) => {
   try {
     res.json({ msg: "User list generated", data: [] });
+  } catch (e) {
+    next(e);
+  }
+});
+
+router.post("/register", (req, res, next) => {
+  try {
+    const { email } = req.body;
+    if (!email) throw new Error("Email is missing");
+    // call the nodemailer
+
+    eventEmitter.emit("signup", email);
+    res.json({ msg: "User Registered Successfully" });
   } catch (e) {
     next(e);
   }

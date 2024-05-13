@@ -1,6 +1,9 @@
 # User Sign up
+
 -database user record save
--email, send welcome user email(event or async await)
+-nodemailer services module
+-async await nodemailer services
+-email from re.body, send welcome user email(event or async await)
 
 # User Login
 
@@ -16,5 +19,7 @@
   through headers.
 
 # Utils
+
 -secure => verify JWT Token middleware
+
 - token => generateToken, verifyToken, checkRole
