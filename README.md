@@ -35,16 +35,16 @@
 2. Error handling
 3. data base connection
 4. environment varialble
-6. api sersioning
-7. services
-8. utils
-9. validation
-10. logging
-11. file upload
+5. api sersioning
+6. services
+7. utils
+8. validation
+9. logging
+10. file upload
 
 // Advance Concept
 
 1. aggregation
 2. pagination
-3. advanced logging
-4. Rate limiting
+3. Rate limiting
+4. advanced logging
