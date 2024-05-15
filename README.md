@@ -29,20 +29,21 @@
 
 15. Add .env file in gitignore file
 
-// Typical Application
+# Typical Application
 
 1. Application run
-2. Error handling
+2. environment varialble
 3. data base connection
-4. environment varialble
+4. Error handling
 5. api sersioning
-6. services
-7. utils
+6. utils
+7. services
 8. validation
 9. logging
 10. file upload
+11. data base connection
 
-// Advance Concept
+# Advance Concept
 
 1. aggregation
 2. pagination

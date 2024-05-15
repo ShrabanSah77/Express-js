@@ -1,6 +1,6 @@
 require("dotenv").config();
 const express = require("express");
-const ip = require("ip");
+const morgan = require("morgan");
 
 const indexRouter = require("./routes");
 
@@ -9,6 +9,9 @@ const PORT = Number(process.env.PORT);
 
 // I can parse request body as json
 app.use(express.json());
+app.use(morgan("dev"));
+app.use("/assets", express.static("public"));
+// http://localhost:8000/assets/uploads/12.jpg
 
 // middleware (application level custom middleware)
 app.use((req, res, next) => {
