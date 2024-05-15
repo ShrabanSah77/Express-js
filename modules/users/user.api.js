@@ -40,7 +40,7 @@ router.get("/", secure(["admin"]), (req, res, next) => {
 
 router.post("/register", validator, (req, res, next) => {
   try {
-    const { email } = req.body;
+    const { email } = req.body; // {email} destructure
     // call the nodemailer
 
     eventEmitter.emit("signup", email);

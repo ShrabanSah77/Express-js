@@ -32,20 +32,20 @@
 # Typical Application
 
 1. Application run
-2. environment varialble
-3. data base connection
+2. Environment Variable
+3. Api versioning
 4. Error handling
-5. api sersioning
-6. utils
-7. services
-8. validation
-9. logging
-10. file upload
-11. data base connection
+5. Utils
+6. Services (gmail, google recaptcha)
+7. Validation
+8. Logging
+9. Static upload
+10.File upload
+11.Data base connection
 
 # Advance Concept
 
-1. aggregation
-2. pagination
+1. Aggregation
+2. Pagination
 3. Rate limiting
-4. advanced logging
+4. Advance logging (mid level developer)
