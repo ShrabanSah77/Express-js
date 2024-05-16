@@ -12,6 +12,7 @@ const userSchema = Joi.object({
     .required(),
     currency: Joi.string(),
   gender: Joi.string().valid("f", "m", "o"),
+  profile: Joi.string(),
 });
 
 // mw define
