@@ -16,12 +16,35 @@
 
 const event = require("events");
 const router = require("express").Router();
+const multer = require("multer");
 const { generateToken } = require("../../utils/token");
 const { secure } = require("../../utils/secure");
 const { sendMail } = require("../../services/mailer");
-const { validator } = require("./user.validator");
-const eventEmitter = new event.EventEmitter();
 
+const { validator } = require("./user.validator");
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "public/upload/");
+  },
+  filename: function (req, file, cb) {
+    console.log({ file }, Date.now());
+
+    cb(
+      null,
+      file.fieldname.concat(
+        "-",
+        Date.now(),
+        ".",
+        file.originalname.split(".")[1]
+      ) //profile-1234664.jpg
+    );
+  },
+});
+
+const upload = multer({ storage: storage, limits: { fileSize: 1000 } });
+
+const eventEmitter = new event.EventEmitter();
 eventEmitter.addListener("signup", (email) =>
   sendMail({
     email,
@@ -38,17 +61,25 @@ router.get("/", secure(["admin"]), (req, res, next) => {
   }
 });
 
-router.post("/register", validator, (req, res, next) => {
-  try {
-    const { email } = req.body; // {email} destructure
-    // call the nodemailer
-
-    eventEmitter.emit("signup", email);
-    res.json({ msg: "User Registered Successfully" });
-  } catch (e) {
-    next(e);
+router.post(
+  "/register",
+  upload.single("profile"), // for multiple files upload use .array
+  validator,
+  (req, res, next) => {
+    try {
+      const { email } = req.body; // {email} destructure
+      if (req.file) {
+        req.body.profile = req.file.path;
+      }
+      // call the nodemailer
+      console.log(req.body);
+      //eventEmitter.emit("signup", email);
+      res.json({ msg: "User Registered Successfully" });
+    } catch (e) {
+      next(e);
+    }
   }
-});
+);
 
 router.post("/login", (req, res, next) => {
   try {
