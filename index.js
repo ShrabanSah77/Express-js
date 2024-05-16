@@ -1,7 +1,6 @@
 require("dotenv").config();
 const express = require("express");
 const morgan = require("morgan");
-const ip = require("ip");
 const indexRouter = require("./routes");
 
 const app = express();
@@ -11,15 +10,8 @@ const PORT = Number(process.env.PORT);
 app.use(express.json());
 app.use(morgan("dev"));
 app.use("/assets", express.static("public"));
-// http://localhost:8000/assets/uploads/12.jpg
 
-// middleware (application level custom middleware)
-app.use((req, res, next) => {
-  req.body.country = ip.address;
-  req.body.currency = "NPR";
-  req.body.currentTime = new Date().toISOString();
-  next();
-});
+// http://localhost:8000/assets/uploads/12.jpg
 
 // I am the routing mechanism, I will send the API request from / to user index
 app.use("/", indexRouter);
