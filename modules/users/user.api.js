@@ -21,6 +21,8 @@ const { generateToken } = require("../../utils/token");
 const { secure } = require("../../utils/secure");
 const { sendMail } = require("../../services/mailer");
 
+const userController = require("./user.controller");
+
 const { validator } = require("./user.validator");
 
 const storage = multer.diskStorage({
@@ -65,7 +67,7 @@ router.post(
   "/register",
   upload.single("profile"), // for multiple files upload use .array
   validator,
-  (req, res, next) => {
+  async (req, res, next) => {
     try {
       const { email } = req.body; // {email} destructure
       if (req.file) {
@@ -73,8 +75,8 @@ router.post(
       }
       // call the nodemailer
       console.log(req.body);
-      //eventEmitter.emit("signup", email);
-      res.json({ msg: "User Registered Successfully" });
+      const result = await userController.create(req.body); //eventEmitter.emit("signup", email);
+      res.json({ msg: "User Registered Successfully", data: result });
     } catch (e) {
       next(e);
     }
