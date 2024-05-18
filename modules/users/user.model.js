@@ -9,15 +9,14 @@ const userSchema = new Schema(
       unique: true,
     },
     password: { type: String, required: true },
-    roles: [
-      {
-        type: String,
-        enum: ["admin", "user"],
-        default: "user",
-        required: true,
-      },
-    ],
-    image: {type: String},
+    roles: {
+      type: Array,
+      default: "user",
+      required: true,
+    },
+
+    image: { type: String },
+    otp: { type: String },
     isEmailVarified: { type: Boolean, required: true, default: false },
     isActive: { type: Boolean, required: true, default: true },
   },
