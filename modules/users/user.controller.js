@@ -2,7 +2,6 @@ const event = require("events");
 const userModel = require("./user.model");
 const { genHash, compareHash } = require("../../utils/hash");
 const { generateToken, generateOtp } = require("../../utils/token");
-
 const { sendMail } = require("../../services/mailer");
 
 const eventEmitter = new event.EventEmitter();
