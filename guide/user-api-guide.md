@@ -67,15 +67,29 @@
   4. else Token invalid
 
   # User List (admin)
-
+  - .find()
+  - secure pass admin as sys role
+  - select false
 
   # User block (admin)
-
+  - blockUser Method
+  - user findOne({_id: id})
+  - use opposite of user isActive status
+  -user updateOne()
 
   # User delete (admin)
-
+  - secure admin only
+  - user finOne()
+  - user deleteOne ({_id: id})
 
   # Get user Profile (User, admin)
+  - secure
+  - checkRole update for sysRole empty condition
+  - secure token send only {name, email}
+  - token decrypt
+  - use email to find user detail (isActive: true, isEmail: true)
+  - user Role and pass it to checkRole
+  - user id => req.currentUser
 
 
   # Update user profile (User, admin)
