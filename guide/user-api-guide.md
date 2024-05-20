@@ -3,6 +3,7 @@
 -database user record save
 -nodemailer services module
 -async await nodemailer services
+- validation concept
 -email from re.body, send welcome user email(event or async await)
 
 # User Login
@@ -20,10 +21,10 @@
 
 # Utils
 
-- secure => verify JWT Token middleware
+- secure => verify JWT Token with checkRole     middleware
 - token => generateToken, verifyToken, checkRole
 
-# User Registration
+# User SignUp / Registration
 
 - API endpoint (msg: User signup successfully(req.body))(/register)
 - userController.register()
@@ -48,7 +49,7 @@
   5. if invalid, throw error
   6. return true
 
-  - Email Token Generation
+# Email Token Generation
   - API (/generate-email-token)
 
   1. email exist; isActive: true
@@ -57,7 +58,7 @@
   4. Store the otp in the user database
   5. email that otp
 
-  - Email Token Verification
+# Email Token Verification
   - API (/verify-email-token)
 
   1. email exist; isActive: true
@@ -65,9 +66,27 @@
   3. if verified, update user database with isEmailVerified: true, otp: ""
   4. else Token invalid
 
-# User Email verification
+  # User List (admin)
 
-- if email unverified, stop user
--
 
-# user list
+  # User block (admin)
+
+
+  # User delete (admin)
+
+
+  # Get user Profile (User, admin)
+
+
+  # Update user profile (User, admin)
+
+  # Get user detail (admin)
+
+
+  # User Passwrod change (user)
+
+
+  # User password reset (admin)
+
+
+    # User forget passwrod (user, admin)
