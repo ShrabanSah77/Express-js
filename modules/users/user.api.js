@@ -71,11 +71,9 @@ router.post("/verify-email-token", async (req, res, next) => {
 });
 
 // User Day 2
-
 router.get("/", secure(["admin"]), async (req, res, next) => {
   try {
     // To do advanced Ops
-
     const data = await userController.list();
     res.json({ msg: "User list generated", data });
   } catch (e) {
@@ -83,8 +81,10 @@ router.get("/", secure(["admin"]), async (req, res, next) => {
   }
 });
 
-router.patch("/:id/block", async (req, res, next) => {
+router.patch("/:id/block", secure(["admin"]), async (req, res, next) => {
   try {
+    const result = await userController.blockUser(req.params.id);
+    res.json({ msg: "User status updated Successfully", data: result });
   } catch (e) {
     next(e);
   }
@@ -92,13 +92,17 @@ router.patch("/:id/block", async (req, res, next) => {
 
 router.delete("/:id", async (req, res, next) => {
   try {
+    const result = await userController.removeById(req.params.id);
+    res.json({ msg: "User Deleted successfully", data: result });
   } catch (e) {
     next(e);
   }
 });
 
-router.get("/profile", async (req, res, next) => {
+router.get("/profile", secure(), async (req, res, next) => {
   try {
+    const result = await userController.getProfile(req.currentUser);
+    res.json({ msg: "User profile generated", data: result });
   } catch (e) {
     next(e);
   }

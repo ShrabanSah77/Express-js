@@ -36,7 +36,9 @@ const create = async (payload) => {
 const login = async (payload) => {
   const { email, password } = payload;
   // check for email
-  const user = await userModel.findOne({ email, isActive: true });
+  const user = await userModel
+    .findOne({ email, isActive: true })
+    .select("+password");
   if (!user) throw new Error("User not found");
   const isVerified = user?.isEmailVarified;
   if (!isVerified) throw new Error("Email Verification is required");
@@ -44,7 +46,7 @@ const login = async (payload) => {
   if (!isValidPw) throw new Error("Email or password invalid");
   const tokenPayload = {
     name: user?.name,
-    roles: user?.roles,
+    email: user?.email,
   };
   const token = generateToken(tokenPayload);
   if (!token) throw new Error("Something went wrong");
@@ -55,7 +57,7 @@ const getById = (id) => {
   return userModel.findOne({ _id: id });
 };
 
-const list = () => {
+const list = async () => {
   return userModel.find();
 };
 
@@ -96,10 +98,30 @@ const verifyEmailToken = async (payload) => {
   return isTokenValid;
 };
 
+const blockUser = async (payload) => {
+  const user = await userModel.findOne({ _id: payload });
+  if (!user) throw new error("User not found");
+  const statusPayload = {
+    isActive: !user?.isActive,
+  };
+  const updatedUser = await userModel.updateOne(
+    { _id: payload },
+    statusPayload
+  );
+  if (!updatedUser) throw new Error("Something went Wrong");
+  return true;
+};
+
+const getProfile = (_id) => {
+  return userModel.findOne({ _id });
+};
+
 module.exports = {
+  blockUser,
   login,
   create,
   getById,
+  getProfile,
   list,
   updateById,
   removeById,
