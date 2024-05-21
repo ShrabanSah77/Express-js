@@ -73,14 +73,14 @@
 
   # User block (admin)
   - blockUser Method
-  - user findOne({_id: id})
+  - user findOne({\_id: id})
   - use opposite of user isActive status
   -user updateOne()
 
   # User delete (admin)
   - secure admin only
   - user finOne()
-  - user deleteOne ({_id: id})
+  - user deleteOne ({\_id: id})
 
   # Get user Profile (User, admin)
   - secure
