@@ -71,6 +71,7 @@ router.post("/verify-email-token", async (req, res, next) => {
 });
 
 // User Day 2
+
 router.get("/", secure(["admin"]), async (req, res, next) => {
   try {
     // To do advanced Ops
@@ -108,29 +109,57 @@ router.get("/profile", secure(), async (req, res, next) => {
   }
 });
 
-router.put("/profile", async (req, res, next) => {
+// Day 3
+
+router.put("/profile", secure(), async (req, res, next) => {
   try {
+    const result = await userController.updateById(req.currentUser, req.body);
+    res.json({ msg: "User Profile Updated Successfully", data: result });
   } catch (e) {
     next(e);
   }
 });
 
-router.get("/:id", async (req, res, next) => {
+router.get("/:id", secure(["admin"]), async (req, res, next) => {
   try {
+    const result = await userController.getById(req.params.id);
+    res.json({ msg: "User detail generated", data: result });
   } catch (e) {
     next(e);
   }
 });
 
-router.post("/change-password", async (req, res, next) => {
+router.post(
+  "/change-password",
+  secure(["user", "admin"]),
+  async (req, res, next) => {
+    try {
+      const result = await userController.changePassword(
+        req.currentUser,
+        req.body
+      );
+      res.json({ msg: "Password changed successfully", data: result });
+    } catch (e) {
+      next(e);
+    }
+  }
+);
+
+router.post("/reset-password", secure(["admin"]), async (req, res, next) => {
   try {
+    const { id, newPassword } = req.body;
+    if (!id || !newPassword) throw new Error("Something is missing");
+    const result = await userController.resetPassword(id, newPassword);
+    res.json({ msg: "Password Reset Successfully", data: result });
   } catch (e) {
     next(e);
   }
 });
 
-router.post("/reset-password", async (req, res, next) => {
+router.post("/forget-password-token", async (req, res, next) => {
   try {
+    const result = await userController.forgetPasswordTokenGen(req.body);
+    res.json({ msg: "Forget Password Token sent successfully", data: result });
   } catch (e) {
     next(e);
   }
@@ -138,6 +167,8 @@ router.post("/reset-password", async (req, res, next) => {
 
 router.post("/forget-password", async (req, res, next) => {
   try {
+    const result = await userController.forgetPasswordPassChange(req.body);
+    res.json({ msg: "Password changed successfully", data: result });
   } catch (e) {
     next(e);
   }

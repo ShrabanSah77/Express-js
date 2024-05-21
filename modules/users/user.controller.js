@@ -62,7 +62,7 @@ const list = async () => {
 };
 
 const updateById = (id, payload) => {
-  return userModel.updateOne({ _id: id }, payload);
+  return userModel.findOneAndUpdate({ _id: id }, payload, { new: true });
 };
 
 const removeById = (id) => {
@@ -116,8 +116,78 @@ const getProfile = (_id) => {
   return userModel.findOne({ _id });
 };
 
+const changePassword = async (id, payload) => {
+  const { oldPassword, newPassword } = payload;
+  // Get old password from the user
+  const user = await userModel
+    .findOne({
+      _id: id,
+      isActive: true,
+      isEmailVarified: true,
+    })
+    .select("+password");
+  if (!user) throw new Error("User not found");
+  // compare that password to the database
+  const isValidPw = compareHash(user?.password, oldPassword);
+  if (!isValidPw) throw new Error("Password not matched");
+  // convert newPassword to hashPassword
+  const data = { password: genHash(newPassword) };
+  // store that hashPassword
+  return userModel.updateOne({ _id: id }, data);
+};
+
+const resetPassword = async (id, newPassword) => {
+  // user exist??
+  const user = await userModel.findOne({ _id: id });
+  if (!user) throw new Error("User not Found");
+  // newPassword hash
+  const hashPw = genHash(newPassword);
+  // user update
+  return userModel.updateOne({ _id: id }, { password: hashPw });
+};
+
+const forgetPasswordTokenGen = async (payload) => {
+  const { email } = payload;
+  // find the user
+  const user = await userModel.findOne({
+    email,
+    isActive: true,
+    isEmailVarified: true,
+  });
+  if (!user) throw new Error("User not found");
+  // Generate the token
+  const otp = generateOtp();
+  // store the token in the database.
+  const updatedUser = await userModel.updateOne({ email }, { otp });
+  if (!updatedUser) throw new Error("Something went wrong");
+  //send the token in the email.
+  eventEmitter.emit("emailVerification", email, otp);
+  return true;
+};
+const forgetPasswordPassChange = async (payload) => {
+  const { email, otp, newPassword } = payload;
+  // Find the user
+  const user = await userModel.findOne({
+    email,
+    isActive: true,
+    isEmailVarified: true,
+  });
+  if (!user) throw new Error("User not found");
+  if (otp !== user?.otp) throw new Error("OTP mismatch");
+  const updateUser = await userModel.updateOne(
+    { email },
+    { password: hashPw, otp: "" }
+  );
+  if (!updateUser) throw new Error("Something went wrong");
+  return true;
+};
+
 module.exports = {
   blockUser,
+  changePassword,
+  resetPassword,
+  forgetPasswordTokenGen,
+  forgetPasswordPassChange,
   login,
   create,
   getById,
