@@ -1,10 +1,9 @@
 const movieModel = require("./movie.model");
+const {slugger} = require("../../utils/text");
 
 // movie create (create)
 const create = async (payload) => {
-  // create slug from title (slugify)
-  const slug = "";
-  // check if the slug exists in db
+  const slug = slugger (payload?.title);
   const movie = await movieModel.findOne({ slug });
   if (movie) throw new Error("Movie title is already in use");
   // create the movie

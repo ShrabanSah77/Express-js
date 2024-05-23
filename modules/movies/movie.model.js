@@ -1,3 +1,4 @@
+const { required } = require("joi");
 const { Schema, model } = require("mongoose");
 // schema
 const movieSchema = new Schema(
