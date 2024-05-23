@@ -9,8 +9,6 @@ const storage = multer.diskStorage({
     cb(null, "public/upload/");
   },
   filename: function (req, file, cb) {
-    console.log({ file }, Date.now());
-
     cb(
       null,
       file.fieldname.concat(
@@ -21,6 +19,7 @@ const storage = multer.diskStorage({
       ) //profile-1234664.jpg
     );
   },
+  // how to limit the file size; 1MB limit??
 });
 
 const upload = multer({ storage: storage, limits: { fileSize: 1000 } });
@@ -74,7 +73,7 @@ router.post("/verify-email-token", async (req, res, next) => {
 
 router.get("/", secure(["admin"]), async (req, res, next) => {
   try {
-    // To do advanced Ops
+    // TODO advanced Ops
     const data = await userController.list();
     res.json({ msg: "User list generated", data });
   } catch (e) {
