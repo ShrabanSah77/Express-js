@@ -26,6 +26,7 @@ const secure = (sysRole = []) => {
       const validRole = checkRole({ sysRole, userRole: userInfo?.Roles || [] });
       if (!validRole) throw new Error("User unauthorized");
       req.currentUser = userInfo?._id;
+      // req.bod.createdBy = userInfo?._id;
       next();
     } catch (e) {
       next(e);
