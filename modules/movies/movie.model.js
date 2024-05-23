@@ -1,6 +1,7 @@
-const { required } = require("joi");
 const { Schema, model } = require("mongoose");
-// schema
+
+const { ObjectId } = Schema.Types;
+
 const movieSchema = new Schema(
   {
     title: { type: String, required: true, unique: true },
@@ -9,12 +10,11 @@ const movieSchema = new Schema(
     synopsis: { type: String },
     poster: { type: String, required: true },
     releaseDate: { type: Data, required: true, default: Date.now },
-    endDate: { type: Data, required: true, default: Date.now },
+    endDate: { type: Data, required: true },
     seats: { type: Number, required: true, default: 0 },
-    // TODO (reference with User)
-    // createdBy: {}
+    createdBy: { type: ObjectId, ref: "User" },
+    updatedBy: { type: ObjectId, ref: "User"},
   },
-
   {
     timestamps: true,
   }
