@@ -87,6 +87,7 @@ router.put(
 router.delete("/slug", secure(["admin"]), async (req, res, next) => {
   try {
     const { slug } = req.params;
+    req.body.updatedBy = req.currentUser;
     const result = await movieController.remove(slug);
     res.json({ msg: `delete one movie by ${slug}`, data: result });
   } catch (e) {
@@ -118,6 +119,7 @@ router.patch(
   async (req, res, next) => {
     try {
       const { slug } = req.params;
+      req.body.updatedBy = req.currentUser;
       req.body.updatedBy = req.currentUser;
       const result = await movieController.updateReleaseDate(slug, req.body);
       res.json({

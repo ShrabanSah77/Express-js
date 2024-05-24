@@ -13,11 +13,26 @@ const movieSchema = new Schema(
     endDate: { type: Data, required: true },
     seats: { type: Number, required: true, default: 0 },
     createdBy: { type: ObjectId, ref: "User" },
-    updatedBy: { type: ObjectId, ref: "User"},
+    updatedBy: { type: ObjectId, ref: "User" },
   },
   {
     timestamps: true,
   }
 );
 
-module.exports = model("Movie", movieSchema);
+https: module.exports = model("Movie", movieSchema);
+
+/*
+Step 1:
+Update model
+const {ovjectId} = Schema.Types;
+type: ObjectId, ref: "User"
+
+step 2:
+secure currentUser
+
+step 3:
+Use the req.currentUser to 
+add new req.body.createdBy/ req.body.updatedBy
+
+*/
