@@ -57,7 +57,7 @@ const getById = (id) => {
   return userModel.findOne({ _id: id });
 };
 
-const list = async () => {
+const list = async ({page=1, limit=10}) => {
   return userModel.find();
 };
 
