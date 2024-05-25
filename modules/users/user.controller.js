@@ -27,7 +27,6 @@ const create = async (payload) => {
   if (duplicateEmail) throw new Error("Email already in use");
   payload.password = genHash(password);
   const result = await userModel.create(payload);
-
   // call the nodemailer
   eventEmitter.emit("signup", email);
   return result;
@@ -57,8 +56,8 @@ const getById = (id) => {
   return userModel.findOne({ _id: id });
 };
 
-const list = async ({page=1, limit=10}) => {
-  return userModel.find();
+const list = async ({ page = 1, limit = 10 }) => {
+  return await userModel.find();
 };
 
 const updateById = (id, payload) => {
@@ -71,7 +70,7 @@ const removeById = (id) => {
 
 const generateEmailToken = async (payload) => {
   const { email } = payload;
-  const user = userModel.findOne({ email, isActive: true });
+  const user = await userModel.findOne({ email, isActive: true });
   if (!user) throw new Error("User not found");
   const isVerified = user?.isEmailVarified;
   if (!isVerified) {
@@ -79,14 +78,14 @@ const generateEmailToken = async (payload) => {
     const updatedUser = await userModel.updateOne({ _id: user?._id }, { otp });
     if (!updatedUser) throw new Error("Something went wrong");
     console.log({ otp });
-    eventEmitter.emit("emailVerification", email);
+    // eventEmitter.emit("emailVerification", email);
   }
   return true;
 };
 
 const verifyEmailToken = async (payload) => {
   const { email, token } = payload;
-  const user = userModel.findOne({ email, isActive: true });
+  const user = await userModel.findOne({ email, isActive: true });
   if (!user) throw new Error("User not found");
   const isTokenValid = user?.otp === token;
   if (!isTokenValid) throw new Error("Token mismatch");
@@ -99,6 +98,7 @@ const verifyEmailToken = async (payload) => {
 };
 
 const blockUser = async (payload) => {
+  console.log({ payload });
   const user = await userModel.findOne({ _id: payload });
   if (!user) throw new error("User not found");
   const statusPayload = {

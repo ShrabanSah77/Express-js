@@ -14,7 +14,6 @@ const userSchema = new Schema(
       default: "user",
       required: true,
     },
-
     image: { type: String },
     otp: { type: String },
     isEmailVarified: { type: Boolean, required: true, default: false },
