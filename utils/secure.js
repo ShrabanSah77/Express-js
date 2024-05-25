@@ -23,7 +23,7 @@ const secure = (sysRole = []) => {
       // const data = isValid.data
       // RBAC (Role-Based Access Control)
       // RBAC VS PBAC VS ABAC
-      const validRole = checkRole({ sysRole, userRole: userInfo?.Roles || [] });
+      const validRole = checkRole({ sysRole, userRole: userInfo?.roles || [] });
       if (!validRole) throw new Error("User unauthorized");
       req.currentUser = userInfo?._id;
       // req.bod.createdBy = userInfo?._id;
