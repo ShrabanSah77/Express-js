@@ -9,7 +9,7 @@ const create = async (payload) => {
   if (movie) throw new Error("Movie title is already in use");
   // create the movie
   payload.slug = slug;
-  return movieModel.create(payload);
+  return await movieModel.create(payload);
 };
 
 // movie list (list)
@@ -60,7 +60,7 @@ const remove = async (slug) => {
   return movieModel.deleteOne({ slug });
 };
 
-model.exports = {
+module.exports = {
   create,
   list,
   getBySlug,

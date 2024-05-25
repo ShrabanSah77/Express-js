@@ -21,6 +21,11 @@ const storage = multer.diskStorage({
   // how to limit the file size; 1MB limit??
 });
 
+const upload = multer({
+  storage: storage,
+  limits: { fileSize: 1000000 }, // in bytes (1 MB = 1000000 bytes)
+});
+
 // 1. List all movie
 
 router.get("/", async (req, res, next) => {

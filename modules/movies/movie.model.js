@@ -9,8 +9,8 @@ const movieSchema = new Schema(
     duration: { type: String, required: true },
     synopsis: { type: String },
     poster: { type: String, required: true },
-    releaseDate: { type: Data, required: true, default: Date.now },
-    endDate: { type: Data, required: true },
+    releaseDate: { type: Date, required: true, default: Date.now },
+    endDate: { type: Date, required: true },
     seats: { type: Number, required: true, default: 0 },
     createdBy: { type: ObjectId, ref: "User" },
     updatedBy: { type: ObjectId, ref: "User" },
@@ -20,7 +20,7 @@ const movieSchema = new Schema(
   }
 );
 
-https: module.exports = model("Movie", movieSchema);
+module.exports = model("Movie", movieSchema);
 
 /*
 Step 1:
